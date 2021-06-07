@@ -1,0 +1,51 @@
+{
+    "menu": {
+        "home": "Perfil",
+        "news": "Notícias",
+        "buttons": {
+            "login": "Entrar",
+            "sign-in": "Cadastrar"
+        },
+        "play": "Jogar!"
+    },
+    "pages": {
+        "home": {
+            "from": "de",
+            "age": "Idade",
+            "badges": "Insígnias",
+            "pokemons": "Pokemons",
+            "victories": "Vitórias",
+            "losses": "Derrotas",
+            "current-team": "Time",
+            "friends": "Amigos",
+            "my-pokemons": "Meus Pokémons",
+            "my-pokemons-filter": "filtre seus pokémons por nome!"
+        },
+        "404": "Opa! Página não encontrada ):"
+    },
+    "shared": {
+        "pokemon-card": {
+            "fire": "Fogo",
+            "water": "Água",
+            "grass": "Grama",
+            "poison": "Veneno",
+            "flying": "Voador",
+            "psychic": "Psíquico",
+            "ghost": "Fantasma",
+            "normal": "Normal",
+            "dragon": "Dragão",
+            "ice": "Gelo",
+            "fairy": "Fada",
+            "fighting": "Lutador",
+            "electric": "Elétrico",
+            "ground": "Terra",
+            "rock": "Pedra",
+            "bug": "Inseto",
+            "dark": "Sombrio",
+            "steel": "Aço"
+        }
+    },
+    "game": {
+        "no-poke": "Nenhum Pokémon encontrado! ):"
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "menu": {
+        "home": "Home",
+        "news": "News",
+        "buttons": {
+            "login": "Login",
+            "sign-in": "Sign up"
+        },
+        "play": "Play!"
+    },
+    "pages": {
+        "home": {
+            "from": "from",
+            "age": "Age",
+            "badges": "Badges",
+            "pokemons": "Pokemons",
+            "victories": "Victories",
+            "losses": "Losses",
+            "current-team": "Current team",
+            "friends": "Friends",
+            "my-pokemons": "My Pokémons",
+            "my-pokemons-filter": "filter ur Pokés by name!"
+        },
+        "404": "Oops! Page not found ):"
+    },
+    "shared": {
+        "pokemon-card": {
+            "fire": "Fire",
+            "water": "Water",
+            "grass": "Grass",
+            "poison": "Poison",
+            "flying": "Flying",
+            "psychic": "Psychic",
+            "ghost": "Ghost",
+            "normal": "Normal",
+            "dragon": "Dragon",
+            "ice": "Ice",
+            "fairy": "Fairy",
+            "fighting": "Fighting",
+            "electric": "Electric",
+            "ground": "Ground",
+            "rock": "Rock",
+            "bug": "Bug",
+            "dark": "Dark",
+            "steel": "Steel"
+        }
+    },
+    "game": {
+        "no-poke": "No Pokémon Found! ):"
+    }
+}
