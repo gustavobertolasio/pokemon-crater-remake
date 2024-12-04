@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 const LanguagesWrapper = styled.div`
   width: fit-content;
@@ -16,7 +16,11 @@ const Languages = () => {
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
-  
+
+  useEffect(() => {
+    changeLanguage(navigator.language.split('-')[0])
+  },[])
+
   return (
     <LanguagesWrapper>
       <h6 onClick={() => changeLanguage("en")}>en</h6>

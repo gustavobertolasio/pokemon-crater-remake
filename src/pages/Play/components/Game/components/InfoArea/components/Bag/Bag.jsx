@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Backpack from "../../../../../../../../assets/information/backpack.svg";
 import UserContext from "../../../../../../../../contexts/UserContext";
 import { getUserInfo } from "../../../../../../../../api/Api";
+import { Popover } from "@material-ui/core";
 
 const BagWrapper = styled.div`
-  width: 96%;
+  width: 170px;
   height: 250px;
 `;
 
@@ -16,7 +17,7 @@ const BagItemListWrapper = styled.div`
   background-color: sandybrown;
   border-radius: 10px;
   border: 3px solid brown;
-  width: inherit;
+  width: 160px;
   height: 220px;
 `;
 const TitleArea = styled.div`
@@ -43,10 +44,17 @@ const BackPackItemList = styled.div`
   border: 1px solid black;
   height: 180px;
   background-color: blanchedalmond;
+  display:flex;
+  flex-direction: column;
 `;
 
-const Bag = () => {
-  const itemsQuery = "BAG { QTD_ITEM ITEM { ITEM_NAME }}";
+const Bag = ({
+  backPackAsPopover,
+  backpackAnchor,
+  popoverClose,
+  itemClikedCallback,
+}) => {
+  const itemsQuery = "BAG { QTD_ITEM ITEM { ID ITEM_NAME }}";
 
   const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
@@ -55,18 +63,63 @@ const Bag = () => {
     getUserInfo(user.ID, itemsQuery, setItems);
   }, [user]);
 
+  const open = Boolean(backpackAnchor);
+
   return (
-    <BagWrapper>
-      <BackPackImg src={Backpack} />
-      <BagItemListWrapper>
-        <TitleArea>
-          <h5>Items</h5>
-        </TitleArea>
-        <BackPackItemList>
-            {items?.BAG?.map(item => `${item.ITEM.ITEM_NAME} x${item.QTD_ITEM}`)}
-        </BackPackItemList>
-      </BagItemListWrapper>
-    </BagWrapper>
+    <>
+      {backPackAsPopover ? (
+        <Popover
+          id={open ? "bag-popover" : undefined}
+          open={open}
+          onClose={popoverClose}
+          anchorEl={backpackAnchor}
+          classes={{
+            paper: "popover-bag",
+          }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+        >
+          <BagWrapper>
+            <BackPackImg src={Backpack} />
+            <BagItemListWrapper>
+              <TitleArea>
+                <h5>Items</h5>
+              </TitleArea>
+              <BackPackItemList>
+                {items?.BAG?.map((item, index) => (
+                  <span onClick={() => itemClikedCallback(item.ITEM.ID)}>
+                      <div key={`bag-item-${index}`}>
+                    {item.ITEM.ITEM_NAME} x{item.QTD_ITEM}
+                  </div>
+                  a
+                  </span>
+                ))}
+              </BackPackItemList>
+            </BagItemListWrapper>
+          </BagWrapper>
+        </Popover>
+      ) : (
+        <BagWrapper>
+          <BackPackImg src={Backpack} />
+          <BagItemListWrapper>
+            <TitleArea>
+              <h5>Items</h5>
+            </TitleArea>
+            <BackPackItemList>
+              {items?.BAG?.map(
+                (item) => `${item.ITEM.ITEM_NAME} x${item.QTD_ITEM}`
+              )}
+            </BackPackItemList>
+          </BagItemListWrapper>
+        </BagWrapper>
+      )}
+    </>
   );
 };
 export default Bag;

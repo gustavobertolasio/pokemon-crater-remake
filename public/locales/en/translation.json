@@ -6,7 +6,8 @@
             "login": "Login",
             "sign-in": "Sign up"
         },
-        "play": "Play!"
+        "play": "Play!",
+        "store": "Pokécenter"
     },
     "pages": {
         "home": {
@@ -47,5 +48,10 @@
     },
     "game": {
         "no-poke": "No Pokémon Found! ):"
+    },
+    "register": {
+        "first-step": "Account data",
+        "second-step": "Trainer data",
+        "third-step": "Initial"
     }
 }

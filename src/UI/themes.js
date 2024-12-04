@@ -1,17 +1,19 @@
+import { colors } from "./constants";
+
 export const buttonPrimary = {
   border: "none",
-  backgroundcolor: "cyan",
-  color: "white",
+  backgroundcolor: colors.complementary_blue_3,
+  color: colors.default_white,
   effect: "primaryFade",
-  effectColor: "black",
+  effectColor: colors.default_primary_effect_dark_blue,
 };
 
 export const buttonSecondary = {
-  border: "1px solid cyan",
+  border: `1px solid ${colors.default_white}`,
   backgroundcolor: "transparent",
-  color: "cyan",
+  color: colors.default_white,
   effect: "secondaryFade",
-  effectColor: "gray",
+  effectColor: colors.default_primary_effect_dark_blue,
 };
 
 export const types = {

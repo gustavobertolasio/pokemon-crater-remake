@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import styled from "styled-components";
+import Cancel from "../../assets/controls/cancel.svg";
 import Slot from "../../shared/Slot/Slot";
 import { DefaultPokemonCard } from "../../UI/index";
 import TypesList from "../TypesList/TypesList";
-import Cancel from "../../assets/controls/cancel.svg";
 
 const Card = styled(DefaultPokemonCard)`
   display: flex;
@@ -12,8 +12,9 @@ const Card = styled(DefaultPokemonCard)`
   align-items: center;
   height: fit-content;
   width: 120px;
-  padding-bottom: 4px;
+  padding-bottom: 16px;
   z-index: 99;
+  border-radius: 5px;
 
   img {
     max-width: 72px;
@@ -22,6 +23,34 @@ const Card = styled(DefaultPokemonCard)`
 
   .pokemon-name {
     text-transform: capitalize;
+  }
+
+  &.-hoverable {
+    animation-name: pokemonCardSelection;
+    cursor: pointer;
+    :hover {
+      animation-duration: 5s;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  &.-reduce-opacity {
+    opacity: 0.3;
+  }
+
+  @keyframes pokemonCardSelection {
+    from {
+      background: none;
+    }
+    to {
+      background: rgb(212, 212, 212);
+      background: radial-gradient(
+        circle,
+        rgba(212, 212, 212, 0.8071603641456583) 0%,
+        rgba(212, 212, 212, 0.09007352941176472) 50%,
+        rgba(212, 212, 212, 0.8715861344537815) 100%
+      );
+    }
   }
 `;
 
@@ -54,11 +83,13 @@ const PokemonCard = ({
   showTypeCards,
   showPokemonName,
   filter = "",
-  addPokemonToTeam,
   droppable,
   changePokes,
   canRemoveFromTeam = true,
   removePokeFromTeam,
+  sendPokemon = false,
+  hasHover = false,
+  selected,
 }) => {
   let item = { generatedPokemonId: slot?.GENERATED_POKEMON?.ID };
 
@@ -79,10 +110,23 @@ const PokemonCard = ({
     removePokeFromTeam(slot?.SLOT_NUMBER);
   };
 
+  const send = () => {
+    if (sendPokemon) {
+      sendPokemon(slot?.GENERATED_POKEMON?.POKEMON?.ID);
+    }
+  };
+
   const hide = () => {
     if (slot && slot?.GENERATED_POKEMON)
-      return slot?.GENERATED_POKEMON?.POKEMON?.POKEMON_NAME.includes(filter);
+      return slot?.GENERATED_POKEMON?.POKEMON?.POKEMON_NAME.includes(
+        filter.toLowerCase()
+      );
     return true;
+  };
+
+  const reduceOpacity = () => {
+    if (selected) return +slot?.GENERATED_POKEMON?.POKEMON?.ID !== +selected;
+    return false;
   };
 
   const callback = (pokemonIdBeingEquipped) => {
@@ -134,7 +178,14 @@ const PokemonCard = ({
   ) : (
     hide() &&
     slot && (
-      <Card ref={drag} {...collected}>
+      <Card
+        className={`${hasHover ? "-hoverable " : " "}  ${
+          reduceOpacity() ? "-reduce-opacity" : ""
+        }`}
+        onClick={() => send()}
+        ref={drag}
+        {...collected}
+      >
         {showPokemonName && slot?.GENERATED_POKEMON?.ID && (
           <h6>#{slot?.GENERATED_POKEMON?.ID}</h6>
         )}

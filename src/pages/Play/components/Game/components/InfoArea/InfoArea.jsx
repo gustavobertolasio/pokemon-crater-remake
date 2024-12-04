@@ -1,12 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import { DefaultShadowedCard } from "../../../../../../UI";
-import Controls from "./components/Controls/Controls";
-import Bag from "./components/Bag/Bag";
-import PokemonCard from "../../../../../../shared/PokemonCard/PokemonCard";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import DndWrapper from "../../../../../../common/DndWrapper";
+import Button from "../../../../../../shared/Button/Button";
+import PokemonCard from "../../../../../../shared/PokemonCard/PokemonCard";
+import { DefaultShadowedCard } from "../../../../../../UI";
+import Bag from "./components/Bag/Bag";
+import Controls from "./components/Controls/Controls";
 
 const InfoAreaWrapper = styled(DefaultShadowedCard)`
   display: flex;
@@ -33,27 +33,45 @@ const FoundPokemonArea = styled.div`
   }
 `;
 
-const InfoArea = ({ config }) => {
+const FoundPokemon = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const InfoArea = ({ config, handleBattle }) => {
   const { t } = useTranslation();
+  const handleBattleClick = async () => {
+    handleBattle();
+  };
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <InfoAreaWrapper>
+      <InfoAreaWrapper id="info">
+        <DndWrapper id="info">
         <Controls walk={config.walk}></Controls>
         <FoundPokemonArea className="mt-16">
           {config.foundPokemon && (
-            <PokemonCard
-              slot={{ GENERATED_POKEMON: config.foundPokemon }}
-              showTypeCards={false}
-              showPokemonName={true}
-              canRemoveFromTeam={false}
-              droppable={false}
-            />
+            <FoundPokemon>
+              <PokemonCard
+                slot={{ GENERATED_POKEMON: config.foundPokemon }}
+                showTypeCards={false}
+                showPokemonName={true}
+                canRemoveFromTeam={false}
+                droppable={false}
+              />
+              <div className="mt-8" />
+              <Button
+                buttonTitle="Battle!"
+                isPrimary
+                clickCallback={() => handleBattleClick()}
+              />
+            </FoundPokemon>
           )}
           {!config.foundPokemon && <h6>{t("game.no-poke")}</h6>}
         </FoundPokemonArea>
         <Bag />
+        </DndWrapper> 
       </InfoAreaWrapper>
-    </DndProvider>
   );
 };
 export default InfoArea;

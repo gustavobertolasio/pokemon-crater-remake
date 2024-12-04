@@ -6,15 +6,16 @@ import East from "../../../../../../../../assets/controls/east.svg";
 import South from "../../../../../../../../assets/controls/south.svg";
 
 const ControlsWrapper = styled.div`
+  padding-top: 16px;
   display: flex;
-  width: 180px;
-  height: 180px;
+  width: 165px;
+  height: 165px;
 `;
 
 const SideArea = styled.div`
   display: flex;
-  width: 60px;
-  height: 180px;
+  width: 55px;
+  height: 100%;
   align-items: center;
 `;
 
@@ -24,8 +25,8 @@ const CenterArea = styled(SideArea)`
 `;
 
 const Button = styled.button`
-  width: 100%;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background: transparent;
   border: none;
   cursor: pointer;

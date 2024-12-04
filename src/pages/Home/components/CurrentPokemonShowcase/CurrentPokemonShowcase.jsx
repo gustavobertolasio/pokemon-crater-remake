@@ -5,12 +5,13 @@ import TeamContext from "../../../../contexts/TeamContext";
 import PokemonCard from "../../../../shared/PokemonCard/PokemonCard";
 import { DefaultHomeCard } from "../../../../UI/index";
 import { usePromiseTracker } from "react-promise-tracker";
+import DndWrapper from "../../../../common/DndWrapper";
 
 const CurrentPokemonShowcaseWrapper = styled(DefaultHomeCard)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  height: fit-content;
   padding-bottom: 16px;
   width: 810px;
 
@@ -27,7 +28,11 @@ const TeamShowoff = styled.div`
   width: 95%;
 `;
 
-function CurrentPokemonShowcase({ homeChangePokes, homeRemovePokeFromTeam, homeAddPoke }) {
+function CurrentPokemonShowcase({
+  homeChangePokes,
+  homeRemovePokeFromTeam,
+  homeAddPoke,
+}) {
   const { t } = useTranslation();
   const team = useContext(TeamContext);
   const { promiseInProgress } = usePromiseTracker({
@@ -50,23 +55,27 @@ function CurrentPokemonShowcase({ homeChangePokes, homeRemovePokeFromTeam, homeA
     team.filter((team) => team.GENERATED_POKEMON).length > 1 ? true : false;
 
   return (
-    <CurrentPokemonShowcaseWrapper>
-      <h4 className="my-pokemon-title mt-16">{t("pages.home.current-team")}</h4>
+    <CurrentPokemonShowcaseWrapper id="showcase">
+      <DndWrapper id="showcase">
+        <h4 className="my-pokemon-title mt-16">
+          {t("pages.home.current-team")}
+        </h4>
 
-      <TeamShowoff theme={team} className="mt-16">
-        {team?.map((slot) => (
-          <PokemonCard
-            key={slot?.GENERATED_POKEMON?.ID || 0}
-            slot={slot}
-            showTypeCards={true}
-            canRemoveFromTeam={canRemoveFromTeam()}
-            showPokemonName={true}
-            droppable={true}
-            removePokeFromTeam={removePokeFromTeam}
-            changePokes={slot.GENERATED_POKEMON ? changePokes: addPoke}
-          />
-        ))}
-      </TeamShowoff>
+        <TeamShowoff theme={team} className="mt-16">
+          {team?.map((slot) => (
+            <PokemonCard
+              key={slot?.GENERATED_POKEMON?.ID || 0}
+              slot={slot}
+              showTypeCards={true}
+              canRemoveFromTeam={canRemoveFromTeam()}
+              showPokemonName={true}
+              droppable={true}
+              removePokeFromTeam={removePokeFromTeam}
+              changePokes={slot.GENERATED_POKEMON ? changePokes : addPoke}
+            />
+          ))}
+        </TeamShowoff>
+      </DndWrapper>
     </CurrentPokemonShowcaseWrapper>
   );
 }

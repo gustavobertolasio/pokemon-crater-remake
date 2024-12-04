@@ -10,13 +10,18 @@ const Buttonzera = styled.button`
   background-color: transparent;
   font-size: 16px;
   border-radius: 5px;
-  border: ${(props) => (props.theme.border)};
-  background-color: ${(props) => (props.theme.backgroundcolor)};
-  color: ${(props) => (props.theme.color)};
+  border: ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.backgroundcolor};
+  color: ${(props) => props.theme.color};
   cursor: pointer;
 
+  &.-disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+
   :hover {
-    animation-name: ${(props) => (props.theme.effect)};
+    animation-name: ${(props) => props.theme.effect};
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
   }
@@ -34,10 +39,28 @@ const Buttonzera = styled.button`
   }
 `;
 
-const Button = ({ buttonTitle, isPrimary }) => {
+const Button = ({
+  buttonTitle,
+  isPrimary,
+  type = "submit",
+  disabled = false,
+  clickCallback,
+}) => {
+  const handleClick = () => {
+    if (clickCallback) {
+      clickCallback();
+    }
+  };
   return (
     <ThemeProvider theme={isPrimary ? buttonPrimary : buttonSecondary}>
-      <Buttonzera>{buttonTitle}</Buttonzera>
+      <Buttonzera
+        className={disabled ? "-disabled" : ""}
+        type={type}
+        disabled={disabled}
+        onClick={() => handleClick()}
+      >
+        {buttonTitle}
+      </Buttonzera>
     </ThemeProvider>
   );
 };

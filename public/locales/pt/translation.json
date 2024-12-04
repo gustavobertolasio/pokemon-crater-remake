@@ -6,7 +6,8 @@
             "login": "Entrar",
             "sign-in": "Cadastrar"
         },
-        "play": "Jogar!"
+        "play": "Jogar!",
+        "store": "Pokécentro"
     },
     "pages": {
         "home": {
@@ -47,5 +48,10 @@
     },
     "game": {
         "no-poke": "Nenhum Pokémon encontrado! ):"
+    },
+    "register": {
+        "first-step": "Dados da conta",
+        "second-step": "Dados do treinador",
+        "third-step": "Inicial"
     }
 }

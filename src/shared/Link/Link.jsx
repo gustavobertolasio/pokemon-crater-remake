@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { colors } from "../../UI/constants";
 
 const DefaultLink = styled.a`
   font-size: 14px;
-  color: cyan;
+  color: ${colors.default_primary_dark_blue};
   text-decoration: none;
 `;
 

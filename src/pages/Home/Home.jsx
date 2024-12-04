@@ -6,8 +6,6 @@ import Friends from "./components/Friends/Friends";
 import CurrentPokemonShowcase from "./components/CurrentPokemonShowcase/CurrentPokemonShowcase";
 import MyPokemons from "./components/MyPokemons/MyPokemons";
 import UserContext from "../../contexts/UserContext";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import {
   getUserInfo,
   changePokemonFromTeam,
@@ -17,17 +15,30 @@ import {
 } from "../../api/Api";
 import TeamContext from "../../contexts/TeamContext";
 import MyPokemonsContext from "../../contexts/MyPokemonsContext";
+import { colors } from "../../UI/constants";
+import DndWrapper from "../../common/DndWrapper"
 
 const HomeWrapper = styled(DefaultPage)``;
 
 const InfoWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 0 auto;
 `;
 
 const InfoColumn = styled.div`
   display: flex;
   flex-direction: column;
+  height: 87vh;
+
+  :first-of-type {
+    margin-right: 48px;
+  }
+
+  :last-of-type {
+    padding-left: 47px;
+    border-left: 1px solid ${colors.complementary_blue_4};
+  }
 `;
 
 const myPokemonsQuery =
@@ -57,7 +68,7 @@ const Home = () => {
   };
 
   const homeAddPoke = async ({ generatedPokemonId }, slot) => {
-    await addNewPokemonToTeam(generatedPokemonId,  user.ID, setTeam);
+    await addNewPokemonToTeam(generatedPokemonId, user.ID, setTeam);
 
     setTimeout(() => {
       getMyPokemons();
@@ -81,7 +92,6 @@ const Home = () => {
             <Friends friendList={user?.friends}></Friends>
           </InfoColumn>
           <InfoColumn>
-            <DndProvider backend={HTML5Backend}>
               <TeamContext.Provider value={team}>
                 <CurrentPokemonShowcase
                   homeChangePokes={homeChangePokes}
@@ -92,7 +102,6 @@ const Home = () => {
               <MyPokemonsContext.Provider value={myPokemons}>
                 <MyPokemons></MyPokemons>
               </MyPokemonsContext.Provider>
-            </DndProvider>
           </InfoColumn>
         </InfoWrapper>
       </div>

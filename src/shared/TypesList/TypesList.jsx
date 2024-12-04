@@ -25,17 +25,17 @@ const Type = styled.div`
 const typeList = {};
 Object.entries(types).forEach((type) => (typeList[type[0]] = type[1]));
 
-const TypesList = ({pokemonTypes}) => {
+const TypesList = ({ pokemonTypes }) => {
   const { t } = useTranslation();
   const classNameVerification = (index) => {
     return index === 0 && pokemonTypes?.TYPES?.length > 1 ? "mr-4" : "";
   };
-  
+
   return (
     <TypesWrapper className="mt-8">
       {pokemonTypes?.TYPES?.map((typeObj, index) => (
-        <ThemeProvider key={index} theme={typeList[typeObj?.TYPENAME.toLowerCase()]}>
-          <Type className={classNameVerification(index)}>
+        <ThemeProvider theme={typeList[typeObj?.TYPENAME.toLowerCase()]}>
+          <Type key={index} className={classNameVerification(index)}>
             {t(`shared.pokemon-card.${typeObj?.TYPENAME.toLowerCase()}`)}
           </Type>
         </ThemeProvider>

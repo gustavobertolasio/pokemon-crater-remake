@@ -11,6 +11,12 @@ const MenuButton = styled.button`
   cursor: pointer;
   padding: 0 16px;
 
+  &.--active {
+    background-color: #0066ff;
+    cursor: default;
+    pointer-events: none;
+  }
+
   :hover {
     animation-name: backgroundFade;
     animation-duration: 0.5s;
@@ -24,15 +30,14 @@ const MenuButton = styled.button`
   }
 `;
 
-function MenuOption({ title, path }) {
+function MenuOption({ title, path, active }) {
   return (
-    <Link to={path}>
-      <MenuButton>{title}</MenuButton>
+    <Link
+      to={path}
+      onClick={(e) => (active ? e.preventDefault() : "")}
+    >
+      <MenuButton className={active ? "--active" : ""}>{title}</MenuButton>
     </Link>
   );
 }
 export default MenuOption;
-
-// <button class="menu-option">
-//   <router-link class="link":to="option.path"> {{option.optionName}}</router-link>
-// </button>

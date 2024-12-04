@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import Dawn from "../../../../../../assets/trainers/low/dawn.png";
+import Ethan from "../../../../../../assets/trainers/low/ethan.png";
 import PositionContext from "../../../../../../contexts/GameContext";
 import UserContext from "../../../../../../contexts/UserContext";
-import Ethan from "../../../../../../assets/trainers/low/ethan.png";
-import Dawn from "../../../../../../assets/trainers/low/dawn.png";
-import { getMapSlots } from "../../../../../../api/Api";
 import { getImage } from "../../../ArchiveToMap";
 
 const characters = {
@@ -13,15 +12,15 @@ const characters = {
 };
 
 const MapWrapper = styled.div`
-    width 960px;
-    height: 768px;
+  width: 1216px;
+  height: 768px;
 `;
 
 const SlotWrapper = styled.div`
-display:flex;
-width 960px;
-flex-wrap: wrap;
-position:relative;
+  display: flex;
+  width: ${({ width }) => 64 * width}px;
+  flex-wrap: wrap;
+  position: relative;
 `;
 
 const MapSlot = styled.div`
@@ -47,9 +46,9 @@ const MapImg = styled.img`
   position: absolute;
 `;
 
-const Map = ({ config }) => {
+const Map = ({ config, usersInMap }) => {
   const pos = useContext(PositionContext);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const generateMapSlots = () => {
     let slotArray = [];
@@ -62,16 +61,29 @@ const Map = ({ config }) => {
   return (
     <MapWrapper>
       <MapImg src={getImage[config?.map.MAP_ARCHIVE_NAME]} />
-      <SlotWrapper>
+      <SlotWrapper width={config?.map.MAP_WIDTH || 1}>
         {generateMapSlots().map((slot, index) => (
           <MapSlot
             key={index + 1}
             currentPos={index + 1 === pos ? true : false}
           >
+            {usersInMap
+              ?.filter(
+                (userInMap) =>
+                  userInMap?.PLAYER_SLOT === index + 1 &&
+                  userInMap?.USER?.ID !== user.ID
+              )
+              .map((userInMap) => (
+                <img
+                  className="char"
+                  src={characters[userInMap?.USER?.TRAINER]}
+                  alt="Character"
+                />
+              ))}
             {index + 1 === pos ? (
               <img
                 className="char"
-                src={characters[user?.user?.TRAINER]}
+                src={characters[user?.TRAINER]}
                 alt="Character"
               />
             ) : (
